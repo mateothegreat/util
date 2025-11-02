@@ -3,7 +3,7 @@ package files
 import (
 	"testing"
 
-	"github.com/mateothegreat/go-util/paths"
+	"github.com/mateothegreat/util/paths"
 	"github.com/stretchr/testify/assert"
 )
 

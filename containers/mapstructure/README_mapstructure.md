@@ -3,6 +3,7 @@
 A Go library that combines the best of native Go unmarshaling performance with the flexibility of weak type conversions. Perfect for handling configuration files, API responses, and other scenarios where data types might vary. Now with YAML support and automatic format detection!
 
 ## 1. Features
+
 - **Performance First**: Uses native `json.Unmarshal` and `yaml.Unmarshal` when types match perfectly
 - **YAML Support**: Full YAML decoding with the same flexibility as JSON
 - **Auto-Detection**: Automatically detects JSON vs YAML format
@@ -13,6 +14,7 @@ A Go library that combines the best of native Go unmarshaling performance with t
 - **Time Parsing**: Multiple date format support out of the box
 
 <!-- TOC -->
+
 - [MapStructure - High-Performance Flexible Map Decoding](#mapstructure---high-performance-flexible-map-decoding)
   - [1. Features](#1-features)
   - [2. Quick Start](#2-quick-start)
@@ -29,12 +31,12 @@ A Go library that combines the best of native Go unmarshaling performance with t
   - [6. Type Conversion Rules](#6-type-conversion-rules)
   - [7. Comparison with mitchellh/mapstructure](#7-comparison-with-mitchellhmapstructure)
   - [8. License](#8-license)
-<!-- /TOC -->
+  <!-- /TOC -->
 
 ## 2. Quick Start
 
 ```go
-import "github.com/mateothegreat/go-util/containers"
+import "github.com/mateothegreat/util/containers"
 
 // Decode JSON with mixed types (common in config files)
 jsonData := `{"id": "123", "active": "true", "tags": "go,docker,k8s"}`
@@ -63,13 +65,15 @@ m, err := containers.ToMap(myStruct)
 ## 3. When to Use This vs Native Go
 
 ### 3.1. Use Native Go When:
+
 - Working with well-defined APIs where types are guaranteed
 - Performance is critical and types always match
 - Simple JSON/struct unmarshaling without type variations
 
 ### 3.2. Use This Library When:
+
 - Handling configuration files (YAML, JSON, TOML) with string values
-- Processing form data or query parameters 
+- Processing form data or query parameters
 - Working with APIs that return inconsistent types
 - Dealing with databases that return generic maps
 - Need automatic type conversions (string "123" → int 123)
@@ -83,6 +87,7 @@ The library optimizes for the common case:
 2. **Flexible Path**: Only uses reflection-based conversion when types don't match
 
 Benchmarks show:
+
 - Perfect type match: Same performance as native JSON/YAML
 - Type conversions: 2-3x slower than native (but native would fail)
 
@@ -101,7 +106,7 @@ type Config struct {
 // Config file with all string values
 configJSON := `{
     "port": "8080",
-    "debug": "true", 
+    "debug": "true",
     "timeout": "30",
     "hosts": "api1.example.com,api2.example.com"
 }`
@@ -123,7 +128,7 @@ server:
   port: "8080"
   host: localhost
   ssl: "true"
-  
+
 database:
   connections: "10"
   timeout: "30s"
@@ -154,13 +159,13 @@ err := containers.DecodeYAML(yamlConfig, &cfg)
 // The AutoDecode function detects format automatically
 func LoadConfig(data []byte) (*Config, error) {
     var cfg Config
-    
+
     // Works with both JSON and YAML
     err := containers.AutoDecode(data, &cfg)
     if err != nil {
         return nil, err
     }
-    
+
     return &cfg, nil
 }
 
@@ -221,13 +226,13 @@ When `WeaklyTyped` is enabled (default), the following conversions are supported
 
 | From → To | int | uint | float | bool | string | []string | time.Time |
 | --------- | --- | ---- | ----- | ---- | ------ | -------- | --------- |
-| string    | ✓   | ✓    | ✓     | ✓    | ✓      | ✓*       | ✓**       |
+| string    | ✓   | ✓    | ✓     | ✓    | ✓      | ✓\*      | ✓\*\*     |
 | float64   | ✓   | ✓    | ✓     | ✗    | ✓      | ✗        | ✗         |
 | int       | ✓   | ✓    | ✓     | ✗    | ✓      | ✗        | ✗         |
 | bool      | ✗   | ✗    | ✗     | ✓    | ✓      | ✗        | ✗         |
 
 \* Comma-separated string → []string (e.g., "a,b,c" → ["a","b","c"])  
-\** Multiple time formats supported (RFC3339, RFC3339Nano, "2006-01-02", etc.)
+\*\* Multiple time formats supported (RFC3339, RFC3339Nano, "2006-01-02", etc.)
 
 ## 7. Comparison with mitchellh/mapstructure
 
@@ -243,4 +248,4 @@ This library provides similar functionality but with key differences:
 
 ## 8. License
 
-This library inherits the Apache 2.0 license from the CloudWeGo project dependencies. 
+This library inherits the Apache 2.0 license from the CloudWeGo project dependencies.

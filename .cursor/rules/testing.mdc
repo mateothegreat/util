@@ -1,0 +1,29 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+## Testing Standards
+
+### Test Coverage Requirements
+1. **Generate test coverage for ALL new functionality** - no exceptions
+2. Tests must cover:
+   - Happy path scenarios
+   - Edge cases
+   - Error conditions
+   - Boundary values
+   - Concurrent access (where applicable)
+
+### Test Quality Standards
+1. **Idempotency**: All tests MUST be idempotent - running them multiple times should produce the same result
+2. **Isolation**: Tests should not depend on external state or other tests
+3. **Clarity**: Test names should clearly describe what is being tested
+4. **Performance**: Include benchmarks for performance-critical code
+
+### Test Review Process
+- Re-evaluate existing test coverage when modifying code
+- Re-implement tests if they:
+  - Don't guarantee idempotency
+  - Are potentially problematic or flaky
+  - Could be improved with better approaches
+  - Don't cover new edge cases introduced by changes
